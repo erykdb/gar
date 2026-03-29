@@ -4,7 +4,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-typedef struct //struct for containing crucial data
+typedef struct 
 {
 	char game[40];
 	char email[30];
@@ -13,5 +13,19 @@ typedef struct //struct for containing crucial data
 
 void main()
 {
+	AccountsT* accPass; 
+	int i;
+	int passAmount;
+	int choice;
 
-}
+	printf("Please enter the size of the library\n");
+	scanf("%d", &passAmount);
+
+	accPass = (AccountsT*)malloc(passAmount * sizeof(AccountsT));
+
+	if (accPass == NULL) 
+	{
+		printf("The memory could not be allocated\n");
+		return;
+	}
+
