@@ -1,3 +1,0 @@
-Call_Of_Duty a1 p1
-Battlefield a2 p2
-League_Of_Legends a3 p3
