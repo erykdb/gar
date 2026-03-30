@@ -15,6 +15,7 @@ typedef struct
 void viewPasses(AccountsT* myArray, int arraySize);
 void addPasses(AccountsT* myArray, int arraySize);
 void saveDataToFile(AccountsT* myArray, int arraySize);
+void appendDataToFile(AccountsT* myArray, int arraySize);
 
 void main()
 {
@@ -44,6 +45,7 @@ void main()
 	printf("\nPlease write 1 to view email and password for a game\n");
 	printf("Please write 2 to add email and passowrd for a game\n");
 	printf("Please write 3 to save your local data to a file\n");
+	printf("Please write 4 to append your local data to a file\n");
 	printf("Please write -1 to exit\n");
 	scanf("%d", &choice);
 
@@ -55,10 +57,13 @@ void main()
 			addPasses(accPass, passAmount);
 		else if (choice == 3)
 			saveDataToFile(accPass, passAmount);
+		else if (choice == 4)
+			appendDataToFile(accPass, passAmount);
 
 		printf("\nPlease write 1 to view email and password for a game\n");
 		printf("Please write 2 to add email and passowrd for a game\n");
 		printf("Please write 3 to save your local data to a file\n");
+		printf("Please write 4 to append your local data to a file\n");
 		printf("Please write -1 to exit\n");
 		scanf("%d", &choice);
 	}
@@ -139,6 +144,26 @@ void saveDataToFile(AccountsT* myArray, int arraySize)
 		}
 	}
 	fclose(fp);
-	printf("Data successfully saved to accounts.txt\n");
+	printf("Data successfully saved to accounts.txt!\n");
+}
+
+void appendDataToFile(AccountsT* myArray, int arraySize)
+{
+	FILE* fp;
+	int i;
+
+	fp = fopen("accounts.txt", "a");
+
+	for (i = 0; i < arraySize; i++)
+	{
+		if ((myArray + i)->isEmpty == 1)
+		{
+
+			fprintf(fp, "%s %s %s\n", (myArray + i)->game, (myArray + i)->email, (myArray + i)->password);
+
+		}
+	}
+	fclose(fp);
+	printf("Data successfully appended to accounts.txt!\n");
 }
 
