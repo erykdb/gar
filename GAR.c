@@ -14,13 +14,16 @@ typedef struct
 
 void viewPasses(AccountsT* myArray, int arraySize);
 void addPasses(AccountsT* myArray, int arraySize);
+void saveDataToFile(AccountsT* myArray, int arraySize);
 
 void main()
 {
 	AccountsT* accPass;
+	FILE* fp;
 	int i;
 	int passAmount;
 	int choice;
+	
 
 	printf("Please enter the size of the library:\n");
 	scanf("%d", &passAmount);
@@ -38,9 +41,10 @@ void main()
 		(accPass + i)->isEmpty = 0;
 	}
 
-	printf("\nPlease 1 to view email and password for a game\n");
-	printf("Please 2 to add email and passowrd for a game\n");
-	printf("Please -1 to exit\n");
+	printf("\nPlease write 1 to view email and password for a game\n");
+	printf("Please write 2 to add email and passowrd for a game\n");
+	printf("Please write 3 to save your local data to a file\n");
+	printf("Please write -1 to exit\n");
 	scanf("%d", &choice);
 
 	while (choice != -1)
@@ -49,10 +53,13 @@ void main()
 			viewPasses(accPass, passAmount);
 		else if (choice == 2)
 			addPasses(accPass, passAmount);
+		else if (choice == 3)
+			saveDataToFile(accPass, passAmount);
 
-		printf("\nPlease 1 to view email and password for a game\n");
-		printf("Please 2 to add email and passowrd for a game\n");
-		printf("Please -1 to exit\n");
+		printf("\nPlease write 1 to view email and password for a game\n");
+		printf("Please write 2 to add email and passowrd for a game\n");
+		printf("Please write 3 to save your local data to a file\n");
+		printf("Please write -1 to exit\n");
 		scanf("%d", &choice);
 	}
 
@@ -82,19 +89,13 @@ void viewPasses(AccountsT* myArray, int arraySize)
 			}
 
 		}
-		else if ((myArray + i)->isEmpty)
-		{
-			printf("There is no games added, please try adding some games first\n");
-			return;
-		}
-
-		if (!gameFound)
-		{
-			printf("Game not found.\n");
-			return;
-		}
 	}
 
+	if (!gameFound)
+	{
+		printf("Game not found.\n");
+		return;
+	}
 }
 
 void addPasses(AccountsT* myArray, int arraySize)
@@ -119,5 +120,25 @@ void addPasses(AccountsT* myArray, int arraySize)
 		}
 	}
 	printf("Your Details have been allocated!\n");
+}
+
+void saveDataToFile(AccountsT* myArray, int arraySize)
+{
+	FILE* fp;
+	int i;
+
+	fp = fopen("accounts.txt", "w");
+
+	for (i = 0; i < arraySize; i++)
+	{
+		if ((myArray + i)->isEmpty == 1)
+		{
+
+			fprintf(fp, "%s %s %s\n", (myArray + i)->game, (myArray + i)->email, (myArray + i)->password);
+
+		}
+	}
+	fclose(fp);
+	printf("Data successfully saved to accounts.txt\n");
 }
 
